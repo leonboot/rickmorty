@@ -1,0 +1,22 @@
+<div class="row g-2">
+    {% for resident in residents %}
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{ resident.image }}" class="img-fluid rounded-start" alt="{{ resident.name }}">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                {{ resident.name }}
+                            </h5>
+                            <p class="card-text mb-0">{{ resident.species }}{% if resident.type is not empty %} ({{ resident.type }}){% endif %}</p>
+                            <p class="card-text small">Last seen: {{ resident.location.name }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

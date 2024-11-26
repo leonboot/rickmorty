@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+
+{# @var App\RickAndMortyApi\Resource\Location[] locations #}
+{# @var App\RickAndMortyApi\Resource\Character[] residents #}
+
+{% block content %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('dimensions_list') }}">Dimensions</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ dimension }}</li>
+        </ol>
+    </nav>
+
+    <h2>Residents</h2>
+    {% include "partials/residents_list.html.twig" with { residents: residents } %}
+
+{% endblock %}

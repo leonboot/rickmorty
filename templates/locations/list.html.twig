@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{# @var array|App\RickAndMortyApi\Resource\Location[] locationsByDimension #}
+
+{% block content %}
+    {% for dimension, locations in locationsByDimension %}
+        <h2>{{ dimension }}</h2>
+        <ul>
+            {% for location in locations %}
+                <li>
+                    <a href="{{ path('locations_details', {id: location.id}) }}">{{ location.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+{% endblock %}

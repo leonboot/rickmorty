@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('dimensions_list') }}">Dimensions</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('dimensions_details', {dimension: location.dimension | url_encode }) }}">{{ location.dimension }}</a>
+            </li>
+            <li class="breadcrumb-item"><a href="{{ path('locations_list') }}">Locations</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ location.dimension }}</li>
+        </ol>
+    </nav>
+
+    {{ dump(location) }}
+{% endblock %}

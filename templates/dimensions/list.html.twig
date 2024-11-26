@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{# @var array|string[] dimensions #}
+
+{% block content %}
+    {% dump(dimensions) %}
+    <ul>
+    {% for dimension in dimensions %}
+        <li><a href="{{ path('dimensions_details', {dimension: dimension | url_encode }) }}">{{ dimension }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}
