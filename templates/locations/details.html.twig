@@ -4,14 +4,22 @@
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ path('dimensions_list') }}">Dimensions</a></li>
-            <li class="breadcrumb-item">
-                <a href="{{ path('dimensions_details', {dimension: location.dimension | url_encode }) }}">{{ location.dimension }}</a>
-            </li>
             <li class="breadcrumb-item"><a href="{{ path('locations_list') }}">Locations</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ location.dimension }}</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ location.name }}</li>
         </ol>
     </nav>
 
-    {{ dump(location) }}
+    <dl class="row">
+        <dt class="col-sm-2">Name</dt>
+        <dd class="col-sm-10">{{ location.name }}</dd>
+        <dt class="col-sm-2">Type</dt>
+        <dd class="col-sm-10">{{ location.type }}</dd>
+        <dt class="col-sm-2">Dimension</dt>
+        <dd class="col-sm-10">{{ location.dimension }}</dd>
+        <dt class="col-sm-2">Created</dt>
+        <dd class="col-sm-10">{{ location.created|date('d/m/Y H:i:s') }}</dd>
+    </dl>
+
+    <h2>Residents</h2>
+    {% include "partials/residents_list.html.twig" with {residents: location.residents} %}
 {% endblock %}

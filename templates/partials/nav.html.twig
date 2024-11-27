@@ -1,0 +1,10 @@
+<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <span class="fs-4">Rick & Morty</span>
+    </a>
+
+    <ul class="nav nav-pills">
+        <li class="nav-item"><a href="{{ path('dimensions_list') }}" {% if activeLink('dimensions') %}class="nav-link active" aria-current="page" {% else %} class="nav-link"{% endif %}>Dimensions</a></li>
+        <li class="nav-item"><a href="{{ path('locations_list') }}" {% if activeLink('locations') %}class="nav-link active" aria-current="page" {% else %} class="nav-link"{% endif %}>Locations</a></li>
+    </ul>
+</header>

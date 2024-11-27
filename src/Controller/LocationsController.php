@@ -30,7 +30,7 @@ class LocationsController extends AbstractController
     public function details(string $id, LocationRepository $repository): Response
     {
         return $this->render('locations/details.html.twig', [
-            'location' => $repository->fetchById($id),
+            'location' => $repository->fetchById($id, LocationRepository::HYDRATE_RESIDENTS),
         ]);
     }
 }

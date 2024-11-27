@@ -14,9 +14,10 @@
     </head>
     <body>
         {% block body %}
-            <div class="container">
-            {% block content %}
-            {% endblock %}
+            <div class="container mb-5">
+                {% include "partials/nav.html.twig" %}
+                {% block content %}
+                {% endblock %}
             </div>
         {% endblock %}
     </body>

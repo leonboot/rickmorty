@@ -1,6 +1,29 @@
+
+$color1: #44F061;
+$color2: #EBEBEB;
+$color3: #FFDD33;
+$color4: #0A1C48;
+$color5: #3AC0DA;
+$color6: #FF5DA2;
+$color7: #87FF58;
+$color8: #FF8A65;
+
+$theme-colors: (
+  "primary": $color4,
+  "secondary": $color8,
+);
+
+$border-color: $color4;
+
 @import "bootstrap/scss/bootstrap.scss";
 
-body { background-color: #d1eaff; }
+body {
+  background-color: $color2;
+}
+
+a {
+    color: darken($color6, 10%);
+}
 
 .character-profile {
 

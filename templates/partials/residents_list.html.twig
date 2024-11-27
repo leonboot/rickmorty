@@ -12,11 +12,18 @@
                                 {{ resident.name }}
                             </h5>
                             <p class="card-text mb-0">{{ resident.species }}{% if resident.type is not empty %} ({{ resident.type }}){% endif %}</p>
-                            <p class="card-text small">Last seen: {{ resident.location.name }}</p>
+                            <p class="card-text small">
+                                Last seen:
+                                <a href="{{ path('locations_details', {id: resident.location.id}) }}">{{ resident.location.name }}</a>
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    {% else %}
+        <div class="col">
+            <p class="text-muted">No residents found.</p>
         </div>
     {% endfor %}
 </div>

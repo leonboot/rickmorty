@@ -1,12 +1,12 @@
 {% extends "base.html.twig" %}
 
-{# @var array|string[] dimensions #}
-
 {% block content %}
-    {% dump(dimensions) %}
-    <ul>
-    {% for dimension in dimensions %}
-        <li><a href="{{ path('dimensions_details', {dimension: dimension | url_encode }) }}">{{ dimension }}</a></li>
+    <ul class="list-group">
+    {% for dimension, locations in locationsByDimensions %}
+        <li class="list-group-item">
+            <a href="{{ path('dimensions_details', {dimension: dimension | url_encode }) }}">{{ dimension }}</a>
+            <span class="text-muted">({{ locations | length }} {% if (locations | length) == 1 %}location{% else %}locations{% endif %})</span>
+        </li>
     {% endfor %}
     </ul>
 {% endblock %}
