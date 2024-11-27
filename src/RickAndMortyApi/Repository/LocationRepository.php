@@ -9,27 +9,29 @@ use App\RickAndMortyApi\Resource\Location;
 class LocationRepository
 {
 
+    public const HYDRATE_RESIDENTS = 1;
+
     public function __construct(private readonly ApiClient $client)
     {
     }
 
-    public function fetchById(int $id): Location
+    public function fetchById(int $id, ?int $hydrate = null): Location
     {
-        return $this->hydrateLocation($this->client->fetchSingleResourceByUrl("location/$id", Location::class));
+        return $this->hydrateLocation($this->client->fetchSingleResourceByUrl("location/$id", Location::class), $hydrate);
     }
 
-    public function fetchAll(): array
+    public function fetchAll(?int $hydrate = null): array
     {
         $result = $this->client->fetchAllResources('location', Location::class);
-        array_walk($result, fn(Location $location) => $this->hydrateLocation($location));
+        array_walk($result, fn(Location $location) => $this->hydrateLocation($location, $hydrate));
 
         return $result;
     }
 
-    public function fetchByDimension(string $dimension): array
+    public function fetchByDimension(string $dimension, ?int $hydrate = null): array
     {
         $results = array_filter(
-            $this->fetchAll(),
+            $this->fetchAll($hydrate),
             fn($location) => $location->getDimension() === $dimension
         );
 
@@ -45,21 +47,26 @@ class LocationRepository
             $this->fetchAll()
         ));
 
-        $results = array_filter($results, fn($dimension) => !in_array($dimension, ['', 'unknown']));
+        $results = array_filter($results, fn($dimension) => !in_array($dimension, ['']));
         sort($results);
 
         return $results;
     }
 
-    private function hydrateLocation(Location $location): Location
+    private function hydrateLocation(Location $location, ?int $mode = null): Location
     {
-        $residents = array_map(
-            fn($residentUrl) => $this->client->fetchSingleResourceByUrl($residentUrl, Character::class),
-            $location->getResidentUrls()
-        );
+        if ($mode & self::HYDRATE_RESIDENTS) {
+            $residentIds = array_map(
+                fn($residentUrl) => (int)basename($residentUrl),
+                $location->getResidentUrls()
+            );
 
-        usort($residents, fn(Character $a, Character $b) => $a->getName() <=> $b->getName());
-        $location->setResidents($residents);
+            $residents = $this->client->fetchMultipleResources('character', $residentIds, Character::class);
+            array_walk($residents, fn(Character $character) => $character->setLocation($location));
+
+            usort($residents, fn(Character $a, Character $b) => $a->getName() <=> $b->getName());
+            $location->setResidents($residents);
+        }
 
         return $location;
     }
